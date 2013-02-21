@@ -125,6 +125,9 @@ class Group(models.Model):
 
     def natural_key(self):
         return (self.name,)
+        
+    admin_category = "Member Administration"
+    admin_category_order = 7
 
 
 class UserManager(models.Manager):
@@ -229,11 +232,7 @@ class User(models.Model):
 
     Username and password are required. Other fields are optional.
     """
-    username = models.CharField(_('username'), max_length=30, unique=True,
-        help_text=_('Required. 30 characters or fewer. Letters, numbers and '
-                    '@/./+/-/_ characters'))
-    first_name = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name = models.CharField(_('last name'), max_length=30, blank=True)
+    username = models.EmailField(_('username'))
     email = models.EmailField(_('e-mail address'), blank=True)
     password = models.CharField(_('password'), max_length=128)
     is_staff = models.BooleanField(_('staff status'), default=False,
@@ -256,9 +255,28 @@ class User(models.Model):
         help_text='Specific permissions for this user.')
     objects = UserManager()
 
+    # authentication types (legacy support)
+    STUDENT_AUTH_TYPE_NORMAL = 0
+    STUDENT_AUTH_TYPE_SHIBBOLETH = 1
+    STUDENT_AUTH_TYPE_CHOICES = (
+        (STUDENT_AUTH_TYPE_SHIBBOLETH, 'Shibboleth'),
+        (STUDENT_AUTH_TYPE_NORMAL, 'Normal'),
+    )
+    auth_type = models.SmallIntegerField(
+        choices=STUDENT_AUTH_TYPE_CHOICES,
+        default=STUDENT_AUTH_TYPE_NORMAL,
+    )
+    auth_info = models.CharField(
+        max_length=255,
+        default='',
+        null=True,
+        blank=True,
+    )
+
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
+        unique_together = ('email', 'auth_type', 'auth_info')
 
     def __unicode__(self):
         return self.username
@@ -402,6 +420,9 @@ class User(models.Model):
             except (ImportError, ImproperlyConfigured):
                 raise SiteProfileNotAvailable
         return self._profile_cache
+
+    admin_category = "Member Administration"
+    admin_category_order = 5
 
 
 class AnonymousUser(object):

@@ -1146,7 +1146,7 @@ class ManyToManyField(RelatedField, Field):
 
         Field.__init__(self, **kwargs)
 
-        msg = _('Hold down "Control", or "Command" on a Mac, to select more than one.')
+        msg = _('You can select multiple by holding down "Control", or "Command" on a Mac.')
         self.help_text = string_concat(self.help_text, ' ', msg)
 
     def get_choices_default(self):

@@ -4,6 +4,10 @@ import locale
 import datetime
 import codecs
 from decimal import Decimal
+# Patch django to use UTF-8 by default
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 from django.utils.functional import Promise
 
