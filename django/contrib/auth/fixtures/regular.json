@@ -12,8 +12,6 @@
         "model": "auth.user", 
         "fields": {
             "username": "my_username", 
-            "first_name": "", 
-            "last_name": "", 
             "is_active": true, 
             "is_superuser": true, 
             "is_staff": true, 

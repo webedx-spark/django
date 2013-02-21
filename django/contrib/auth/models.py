@@ -304,8 +304,9 @@ class User(models.Model):
     def get_full_name(self):
         """
         Returns the first_name plus the last_name, with a space in between.
+        Note: Patched to return just email
         """
-        full_name = u'%s %s' % (self.first_name, self.last_name)
+        full_name = u'%s %s' % self.email
         return full_name.strip()
 
     def set_password(self, raw_password):

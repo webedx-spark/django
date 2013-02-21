@@ -4,8 +4,6 @@
         "model": "auth.user",
         "fields": {
             "username": "testclient",
-            "first_name": "Test",
-            "last_name": "Client",
             "is_active": true,
             "is_superuser": false,
             "is_staff": false,
@@ -22,8 +20,6 @@
         "model": "auth.user",
         "fields": {
             "username": "inactive",
-            "first_name": "Inactive",
-            "last_name": "User",
             "is_active": false,
             "is_superuser": false,
             "is_staff": false,
@@ -40,8 +36,6 @@
         "model": "auth.user",
         "fields": {
             "username": "staff",
-            "first_name": "Staff",
-            "last_name": "Member",
             "is_active": true,
             "is_superuser": false,
             "is_staff": true,
@@ -58,8 +52,6 @@
         "model": "auth.user",
         "fields": {
             "username": "empty_password",
-            "first_name": "Empty",
-            "last_name": "Password",
             "is_active": true,
             "is_superuser": false,
             "is_staff": false,
@@ -76,8 +68,6 @@
         "model": "auth.user",
         "fields": {
             "username": "unmanageable_password",
-            "first_name": "Unmanageable",
-            "last_name": "Password",
             "is_active": true,
             "is_superuser": false,
             "is_staff": false,
@@ -94,8 +84,6 @@
         "model": "auth.user",
         "fields": {
             "username": "unknown_password",
-            "first_name": "Unknown",
-            "last_name": "Password",
             "is_active": true,
             "is_superuser": false,
             "is_staff": false,
