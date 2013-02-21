@@ -1,4 +1,4 @@
-from django.contrib.admindocs import views
+from app.admindocs import views
 from django.db.models import fields as builtin_fields
 from django.utils import unittest
 

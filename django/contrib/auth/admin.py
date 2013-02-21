@@ -1,6 +1,6 @@
 from django.db import transaction
 from django.conf import settings
-from django.contrib import admin
+from app import admin
 from django.contrib.auth.forms import (UserCreationForm, UserChangeForm,
     AdminPasswordChangeForm)
 from django.contrib.auth.models import User, Group

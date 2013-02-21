@@ -1,4 +1,4 @@
-from django.contrib import admin
+from app import admin
 from django.contrib.comments.models import Comment
 from django.utils.translation import ugettext_lazy as _, ungettext
 from django.contrib.comments import get_model

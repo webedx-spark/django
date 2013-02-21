@@ -1,4 +1,4 @@
-from django.contrib.admin import ModelAdmin
+from app.admin import ModelAdmin
 from django.contrib.gis.admin.widgets import OpenLayersWidget
 from django.contrib.gis.gdal import OGRGeomType
 from django.contrib.gis.db import models

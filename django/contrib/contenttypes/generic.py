@@ -14,7 +14,7 @@ from django.db.models.fields.related import RelatedField, Field, ManyToManyRel
 from django.db.models.loading import get_model
 from django.forms import ModelForm
 from django.forms.models import BaseModelFormSet, modelformset_factory, save_instance
-from django.contrib.admin.options import InlineModelAdmin, flatten_fieldsets
+from app.admin.options import InlineModelAdmin, flatten_fieldsets
 from django.contrib.contenttypes.models import ContentType
 from django.utils.encoding import smart_unicode
 
