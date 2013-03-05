@@ -1,5 +1,5 @@
 from django.contrib.gis.db import models
-from django.contrib.localflavor.us.models import USStateField
+from django.db.models.fields import CharField
 
 class Location(models.Model):
     point = models.PointField()
@@ -8,7 +8,7 @@ class Location(models.Model):
 
 class City(models.Model):
     name = models.CharField(max_length=50)
-    state = USStateField()
+    state = CharField()
     location = models.ForeignKey(Location)
     objects = models.GeoManager()
     def __unicode__(self): return self.name
