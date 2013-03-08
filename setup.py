@@ -69,7 +69,7 @@ if len(sys.argv) > 1 and sys.argv[1] == 'bdist_wininst':
 version = __import__('django').get_version()
 
 setup(
-    name = "Django",
+    name = "CDjango",
     version = version,
     url = 'http://www.djangoproject.com/',
     author = 'Django Software Foundation',
