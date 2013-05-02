@@ -7,9 +7,10 @@ from django.conf import settings
 from django.utils.log import getLogger
 from django.utils.timezone import utc
 
+import traceback
 
 logger = getLogger('django.db.backends')
-
+sampled_query_logger = getLogger('sampled_queries')
 
 class CursorWrapper(object):
     def __init__(self, cursor, db):
@@ -62,16 +63,16 @@ class CursorDebugWrapper(CursorWrapper):
                 times = len(param_list)
             except TypeError:           # param_list could be an iterator
                 times = '?'
-            self.db.queries.append({
-                'sql': '%s times: %s' % (times, sql),
-                'time': "%.3f" % duration,
-            })
             logger.debug('(%.3f) %s; args=%s' % (duration, sql, param_list),
                 extra={'duration': duration, 'sql': sql, 'params': param_list}
             )
 
 
 class CursorLoggerWrapper(CursorWrapper):
+
+    def _log_query(self, sql, duration):
+        trace = ''.join(traceback.format_stack())
+        sampled_query_logger.info('(%.3f) %s; args=%s; trace=%s;' % (duration, sql, trace))
 
     def execute(self, sql, params=()):
         self.set_dirty()
@@ -81,10 +82,7 @@ class CursorLoggerWrapper(CursorWrapper):
         finally:
             stop = time()
             duration = stop - start
-            sql = self.db.ops.last_executed_query(self.cursor, sql, params)
-            logger.info('(%.3f) %s; args=%s' % (duration, sql, params),
-                extra={'duration': duration, 'sql': sql, 'params': params}
-            )
+            self._log_query(sql, duration)
 
     def executemany(self, sql, param_list):
         self.set_dirty()
@@ -94,13 +92,7 @@ class CursorLoggerWrapper(CursorWrapper):
         finally:
             stop = time()
             duration = stop - start
-            try:
-                times = len(param_list)
-            except TypeError:           # param_list could be an iterator
-                times = '?'
-            logger.info('(%.3f) %s; args=%s' % (duration, sql, param_list),
-                extra={'duration': duration, 'sql': sql, 'params': param_list}
-            )
+            self._log_query(sql, duration)
 
 
 ###############################################
