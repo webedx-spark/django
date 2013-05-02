@@ -12,6 +12,7 @@ import traceback
 logger = getLogger('django.db.backends')
 sampled_query_logger = getLogger('sampled_queries')
 
+
 class CursorWrapper(object):
     def __init__(self, cursor, db):
         self.cursor = cursor
@@ -63,6 +64,10 @@ class CursorDebugWrapper(CursorWrapper):
                 times = len(param_list)
             except TypeError:           # param_list could be an iterator
                 times = '?'
+            self.db.queries.append({
+                'sql': '%s times: %s' % (times, sql),
+                'time': "%.3f" % duration,
+            })
             logger.debug('(%.3f) %s; args=%s' % (duration, sql, param_list),
                 extra={'duration': duration, 'sql': sql, 'params': param_list}
             )
