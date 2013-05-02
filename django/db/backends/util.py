@@ -72,7 +72,7 @@ class CursorLoggerWrapper(CursorWrapper):
 
     def _log_query(self, sql, duration):
         trace = ''.join(traceback.format_stack())
-        num_rows = self.cursor.affected_rows()
+        num_rows = self.cursor.rowcount
         sampled_query_logger.info('(%.3f) (%4d) %s;\n%s' % (duration, num_rows, sql, trace))
 
     def execute(self, sql, params=()):
