@@ -71,6 +71,38 @@ class CursorDebugWrapper(CursorWrapper):
             )
 
 
+class CursorLoggerWrapper(CursorWrapper):
+
+    def execute(self, sql, params=()):
+        self.set_dirty()
+        start = time()
+        try:
+            return self.cursor.execute(sql, params)
+        finally:
+            stop = time()
+            duration = stop - start
+            sql = self.db.ops.last_executed_query(self.cursor, sql, params)
+            logger.info('(%.3f) %s; args=%s' % (duration, sql, params),
+                extra={'duration': duration, 'sql': sql, 'params': params}
+            )
+
+    def executemany(self, sql, param_list):
+        self.set_dirty()
+        start = time()
+        try:
+            return self.cursor.executemany(sql, param_list)
+        finally:
+            stop = time()
+            duration = stop - start
+            try:
+                times = len(param_list)
+            except TypeError:           # param_list could be an iterator
+                times = '?'
+            logger.info('(%.3f) %s; args=%s' % (duration, sql, param_list),
+                extra={'duration': duration, 'sql': sql, 'params': param_list}
+            )
+
+
 ###############################################
 # Converters from database (string) to Python #
 ###############################################

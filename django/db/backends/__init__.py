@@ -312,11 +312,11 @@ class BaseDatabaseWrapper(object):
 
     def cursor(self):
         self.validate_thread_sharing()
-        if (self.use_debug_cursor or
+        if False and (self.use_debug_cursor or
             (self.use_debug_cursor is None and settings.DEBUG)):
             cursor = self.make_debug_cursor(self._cursor())
         else:
-            cursor = util.CursorWrapper(self._cursor(), self)
+            cursor = util.CursorLoggerWrapper(self._cursor(), self)
         return cursor
 
     def make_debug_cursor(self, cursor):
