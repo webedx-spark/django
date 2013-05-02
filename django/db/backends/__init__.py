@@ -13,6 +13,9 @@ from django.db.transaction import TransactionManagementError
 from django.utils.importlib import import_module
 from django.utils.timezone import is_aware
 
+import random
+from django.conf import settings 
+
 
 class BaseDatabaseWrapper(object):
     """
@@ -312,11 +315,14 @@ class BaseDatabaseWrapper(object):
 
     def cursor(self):
         self.validate_thread_sharing()
-        if False and (self.use_debug_cursor or
+        if (self.use_debug_cursor or
             (self.use_debug_cursor is None and settings.DEBUG)):
             cursor = self.make_debug_cursor(self._cursor())
         else:
-            cursor = util.CursorLoggerWrapper(self._cursor(), self)
+            if random.randint(1, settings.SUBSAMPLE_LOG_QUERIES) == 1:
+                cursor = util.CursorLoggerWrapper(self._cursor(), self)
+            else:
+                cursor = util.CursorWrapper(self._cursor(), self)
         return cursor
 
     def make_debug_cursor(self, cursor):
