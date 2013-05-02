@@ -72,7 +72,7 @@ class CursorLoggerWrapper(CursorWrapper):
 
     def _log_query(self, sql, duration):
         trace = ''.join(traceback.format_stack())
-        sampled_query_logger.info('(%.3f) %s; args=%s; trace=%s;' % (duration, sql, trace))
+        sampled_query_logger.info('(%.3f) %s; trace=%s;' % (duration, sql, trace))
 
     def execute(self, sql, params=()):
         self.set_dirty()
