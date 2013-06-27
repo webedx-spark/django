@@ -272,6 +272,11 @@ class User(models.Model):
         null=True,
         blank=True,
     )
+    account_group = models.IntegerField(
+        max_length=11,
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         verbose_name = _('user')

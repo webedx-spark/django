@@ -10,7 +10,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding field 'User.account_group'
         db.add_column('auth_user', 'account_group',
-                      self.gf('django.db.models.fields.IntegerField')(max_length=255, null=True, blank=True),
+                      self.gf('django.db.models.fields.IntegerField')(max_length=11, null=True, blank=True),
                       keep_default=False)
 
 
@@ -35,7 +35,7 @@ class Migration(SchemaMigration):
         },
         'auth.user': {
             'Meta': {'unique_together': "(('email', 'auth_type', 'auth_info'),)", 'object_name': 'User'},
-            'account_group': ('django.db.models.fields.IntegerField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'account_group': ('django.db.models.fields.IntegerField', [], {'max_length': '11', 'null': 'True', 'blank': 'True'}),
             'auth_info': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'auth_type': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
